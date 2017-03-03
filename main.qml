@@ -22,6 +22,8 @@ ApplicationWindow {
             property alias header: header
             property alias description: description
             property alias array: array
+            property alias timer: timer
+            property int runningAnimations: 0
         }
 
         Page {
@@ -111,9 +113,12 @@ ApplicationWindow {
                         id: arrayElement
                         width: 80
                         height: 80
-                        color: "black"
+                        color: notSelected ? "black" : (selectBig ? red : blue)
 
                         property int value
+                        property bool selectBig: false
+                        property bool selectSmall: false
+                        property bool notSelected: true
 
                         Text {
                             id: arrayValue
@@ -124,10 +129,45 @@ ApplicationWindow {
                             }
                             text: qsTr(arrayElement.value.toString())
                         }
+                        Behavior on x {
+                            PropertyAnimation {
+                                id: animationX
+                                duration: 500
+                                easing.type: Easing.InOutBack
+                                onRunningChanged: {
+                                    if(animationX.running) {
+//                                        items.runningAnimations++
+                                    } else {
+//                                        items.runningAnimations--
+                                    }
+                                }
+                            }
+                        }
+                        Behavior on y {
+                            PropertyAnimation {
+                                id: animationY
+                                duration: 500
+                                easing.type: Easing.InOutBack
+                                onRunningChanged: {
+                                    if(animationY.running) {
+//                                        items.runningAnimations++
+                                    } else {
+//                                        items.runningAnimations--
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+    Timer {
+        id: timer
+        interval: 1000
+        running: false
+        repeat: false
+        onTriggered: Menu.bSortNext()
     }
 
     footer: TabBar {
