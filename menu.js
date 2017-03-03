@@ -11,15 +11,19 @@ var previousMarkedJ = -1
 var levels = [
     {
         "name": "Bubble Sort",
-        "description": "Arranging a given list of numbers in ascending order by Bubble Sort",
+        "description": "Bubble sort is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted.",
         "function": bubble_sort,
-        "array": [2,5,1,6,7,3]
+        "array": [2,5,1,6,7,3],
+        "author": "Rudra Nil Basu",
+        "email": "rudra.nil.basu.1996@gmail.com"
     },
     {
         "name": "Selection Sort",
         "description": "Arranging a given list of numbers in ascending order by Selection Sort",
         "function": selection_sort,
-        "array": [10,9,1,5,4,2]
+        "array": [10,9,1,5,4,2],
+        "author": "Rudra Nil Basu",
+        "email": "rudra.nil.basu.1996@gmail.com"
     }
 ]
 
@@ -44,12 +48,18 @@ function initialiseMenuItems() {
 function load(index) {
     if(selectedIndex != -1) {
         items.elements.itemAt(selectedIndex).selected = false
+        // reload
+        // set isSimulating = false
+        reload()
+        isSimulating = false
     }
     selectedIndex = index
     items.elements.itemAt(selectedIndex).selected = true
 
     items.header.text = levels[index].name
     items.description.text = levels[index].description
+    items.credits.text = "<b>Credits</b>: " + levels[index].author + " ( " + levels[index].email + ")"
+
     items.array.model = levels[index].array.length
     initialiseArray()
 }
@@ -70,6 +80,7 @@ function simulate() {
     levels[selectedIndex].function();
 }
 
+// Bubble Sort starting function
 function bubble_sort() {
     // if originalArray is already sorted, return
     if(isSorted()) {
@@ -89,6 +100,7 @@ function bubble_sort() {
     items.timer.repeat = true
 }
 
+// Bubble Sort iterative part
 function bSortNext() {
     if(previousMarkedJ != -1) {
         unmark(originalArray[previousMarkedJ])
@@ -177,6 +189,23 @@ function unmark(label) {
     }
 }
 
+function findBlockWithLabel(label) {
+    for(var i = 0;i < items.array.model;i++) {
+        if(items.array.itemAt(i).value == label) {
+            return items.array.itemAt(i)
+        }
+    }
+}
+
 function selection_sort() {
     console.log("S Sort it")
+}
+
+function reload() {
+    for(var i=0;i<originalArray.length;i++) {
+        var currentBlock = findBlockWithLabel(levels[selectedIndex].array[i])
+        var finalPosition = findBlockWithLabel(originalArray[i])
+        currentBlock.x = finalPosition.x
+        currentBlock.y = finalPosition.y
+    }
 }

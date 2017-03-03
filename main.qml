@@ -23,6 +23,7 @@ ApplicationWindow {
             property alias description: description
             property alias array: array
             property alias timer: timer
+            property alias credits: credits
             property int runningAnimations: 0
         }
 
@@ -92,10 +93,13 @@ ApplicationWindow {
             }
             Text {
                 id: description
+                width: parent.width
                 anchors.top: header.bottom
                 text: qsTr("Description")
+                wrapMode: Text.Wrap
             }
             Button {
+                id: simulate
                 text: "Simulate"
                 onClicked: Menu.simulate()
                 anchors {
@@ -103,6 +107,23 @@ ApplicationWindow {
                     bottom: parent.bottom
                 }
             }
+            Text {
+                id: credits
+                anchors.bottom: simulate.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("<b>Credits</b>: ")
+                wrapMode: Text.Wrap
+            }
+            /*
+            Button {
+                text: "Reload"
+                onClicked: Menu.reload()
+                anchors {
+                    left: parent.left
+                    bottom: parent.bottom
+                }
+            }
+            */
             Flow {
                 spacing: 10
                 anchors.top: description.bottom
