@@ -1,10 +1,12 @@
 # Simulator
 
-![img](/branding/screen.gif)
-
-[Demo](https://youtu.be/T_XDB8aHvyI)
+> Simulate standard algorithms
 
 [![gitter](https://badges.gitter.im/gitterHQ/gitterHQ.github.io.svg)](https://gitter.im/Bytes_Club/General)
+
+![img](/branding/screen.gif)
+
+[Full Demo](https://youtu.be/T_XDB8aHvyI)
 
 ### Development Setup
 
@@ -13,7 +15,7 @@
 ```
 git clone https://github.com/BytesClub/Simulator.git
 ```
-3. Open Qt Creator > Open Project, and navigate to Simulator/Simulator.pro to open the project.
+3. Open Qt Creator > Open Project, and navigate to `Simulator/Simulator.pro` to open the project.
 
 ### How to contribute
 
