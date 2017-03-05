@@ -188,7 +188,7 @@ ApplicationWindow {
         interval: 1000
         running: false
         repeat: false
-        onTriggered: Menu.bSortNext()
+        onTriggered: Menu.loop()
     }
 
     footer: TabBar {

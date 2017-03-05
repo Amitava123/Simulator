@@ -13,6 +13,7 @@ var levels = [
         "name": "Bubble Sort",
         "description": "Bubble sort is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted.",
         "function": bubble_sort,
+        "loop_function": bSortNext,
         "array": [2,5,1,6,7,3],
         "author": "Rudra Nil Basu",
         "email": "rudra.nil.basu.1996@gmail.com"
@@ -21,6 +22,7 @@ var levels = [
         "name": "Selection Sort",
         "description": "Arranging a given list of numbers in ascending order by Selection Sort",
         "function": selection_sort,
+        "loop_function": sSortNext,
         "array": [10,9,1,5,4,2],
         "author": "Rudra Nil Basu",
         "email": "rudra.nil.basu.1996@gmail.com"
@@ -77,57 +79,13 @@ function simulate() {
     if(selectedIndex == -1 || isSimulating) {
         return
     }
+    // Deselect the selected item
+    items.elements.itemAt(selectedIndex).selected = false
     levels[selectedIndex].function();
 }
 
-// Bubble Sort starting function
-function bubble_sort() {
-    // if originalArray is already sorted, return
-    if(isSorted()) {
-        return
-    }
-
-    isSimulating = true
-    length = originalArray.length
-
-    i=0
-    j=0
-    previousMarkedJ = -1
-    end = length -1
-
-    // start timer
-    items.timer.running = true
-    items.timer.repeat = true
-}
-
-// Bubble Sort iterative part
-function bSortNext() {
-    if(previousMarkedJ != -1) {
-        unmark(originalArray[previousMarkedJ])
-        unmark(originalArray[previousMarkedJ+1])
-    }
-    markRed(originalArray[j])
-    markBlue(originalArray[j+1])
-
-    if(originalArray[j] > originalArray[j+1]) {
-        interchangeBlocksWithLabels(originalArray[j], originalArray[j+1])
-        var temp = originalArray[j]
-        originalArray[j] = originalArray[j+1]
-        originalArray[j+1] = temp
-    }
-
-    previousMarkedJ = j
-    j++
-    if(j >= end -i) {
-        i++
-        j = 0
-        if(i >= end) {
-            unmark(originalArray[previousMarkedJ])
-            unmark(originalArray[previousMarkedJ+1])
-            items.timer.running = false
-            items.timer.repeat = false
-        }
-    }
+function loop() {
+    levels[selectedIndex].loop_function()
 }
 
 function isSorted() {
@@ -197,10 +155,6 @@ function findBlockWithLabel(label) {
     }
 }
 
-function selection_sort() {
-    console.log("S Sort it")
-}
-
 function reload() {
     for(var i=0;i<originalArray.length;i++) {
         var currentBlock = findBlockWithLabel(levels[selectedIndex].array[i])
@@ -209,3 +163,67 @@ function reload() {
         currentBlock.y = finalPosition.y
     }
 }
+
+/*
+ * Algorithms
+ * Functions for all the algorithms goes down here.
+ * Divided into two parts - the "function" (start function) and the "loop" (defines
+ * the iterations).
+ */
+
+// Bubble Sort starting function
+function bubble_sort() {
+    // if originalArray is already sorted, return
+    if(isSorted()) {
+        return
+    }
+
+    isSimulating = true
+    length = originalArray.length
+
+    i=0
+    j=0
+    previousMarkedJ = -1
+    end = length -1
+
+    // start timer
+    items.timer.running = true
+    items.timer.repeat = true
+}
+
+// Bubble Sort iterative part
+function bSortNext() {
+    if(previousMarkedJ != -1) {
+        unmark(originalArray[previousMarkedJ])
+        unmark(originalArray[previousMarkedJ+1])
+    }
+    markRed(originalArray[j])
+    markBlue(originalArray[j+1])
+
+    if(originalArray[j] > originalArray[j+1]) {
+        interchangeBlocksWithLabels(originalArray[j], originalArray[j+1])
+        var temp = originalArray[j]
+        originalArray[j] = originalArray[j+1]
+        originalArray[j+1] = temp
+    }
+
+    previousMarkedJ = j
+    j++
+    if(j >= end -i) {
+        i++
+        j = 0
+        if(i >= end) {
+            unmark(originalArray[previousMarkedJ])
+            unmark(originalArray[previousMarkedJ+1])
+            items.timer.running = false
+            items.timer.repeat = false
+        }
+    }
+}
+
+
+function selection_sort() {
+    console.log("S Sort it")
+}
+
+function sSortNext() {}
